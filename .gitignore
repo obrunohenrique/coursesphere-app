@@ -3,6 +3,7 @@ backend/venv/
 **/__pycache__/
 *.py[cod]
 .env
+*.db
 
 # IDEs e Editores
 .vscode
