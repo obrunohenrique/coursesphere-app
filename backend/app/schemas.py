@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import Optional
 
 # Schema base com campos comuns
@@ -14,6 +14,5 @@ class UserCreate(UserBase):
 # Note que NÃO incluímos a senha aqui por segurança.
 class UserRead(UserBase):
     id: int
-
-    class Config:
-        from_attributes = True # Permite converter um modelo do banco para este schema
+    model_config = ConfigDict(from_attributes=True)
+    
