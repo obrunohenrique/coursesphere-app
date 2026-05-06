@@ -1,6 +1,7 @@
 from sqlmodel import Session, select
 from .models import User
 from .schemas import UserCreate
+from .security import get_password_hash
 from fastapi import HTTPException
 
 # Função para criar um usuário
@@ -13,10 +14,12 @@ def create_user(session: Session, user_in: UserCreate):
     if existing_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     
+    hashed_password = get_password_hash(user_in.password)
+
     db_user = User(
         name=user_in.name,
         email=user_in.email,
-        password=user_in.password
+        password=hashed_password
     )
     session.add(db_user)
     session.commit()
