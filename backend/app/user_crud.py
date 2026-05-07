@@ -1,7 +1,7 @@
 from sqlmodel import Session, select
 from .models import User
 from .schemas import UserCreate
-from .security import get_password_hash
+from .security import get_password_hash, verify_password
 from fastapi import HTTPException
 
 # Função para criar um usuário
@@ -30,3 +30,12 @@ def create_user(session: Session, user_in: UserCreate):
 def get_user_by_email(session: Session, email: str):
     statement = select(User).where(User.email == email)
     return session.exec(statement).first()
+
+
+def authenticate_user(session: Session, email: str, password: str):
+    user = get_user_by_email(session, email)
+    if not user:
+        return False
+    if not verify_password(password, user.password):
+        return False
+    return user
