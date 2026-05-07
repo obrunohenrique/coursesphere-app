@@ -39,3 +39,19 @@ def authenticate_user(session: Session, email: str, password: str):
     if not verify_password(password, user.password):
         return False
     return user
+
+def update_user(session: Session, db_user: User, user_in: UserCreate):
+    # Atualiza campos (incluindo hash da senha se ela for enviada)
+    db_user.name = user_in.name
+    db_user.email = user_in.email
+    db_user.password = get_password_hash(user_in.password)
+    
+    session.add(db_user)
+    session.commit()
+    session.refresh(db_user)
+    return db_user
+
+def delete_user(session: Session, db_user: User):
+    session.delete(db_user)
+    session.commit()
+    return True

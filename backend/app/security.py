@@ -1,11 +1,17 @@
 from datetime import datetime, timedelta
 from jose import jwt
 from passlib.context import CryptContext
+from pathlib import Path
+import os
+from dotenv import load_dotenv
 
-# 2. Configurações de Token 
-SECRET_KEY = "sua_chave_secreta_super_segura_aqui" 
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(dotenv_path=BASE_DIR / ".env")
+
+# Configurações de Token 
+SECRET_KEY = os.getenv("SECRET_KEY") 
+ALGORITHM = os.getenv("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
 # Configuração do hash usado nas senhas
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

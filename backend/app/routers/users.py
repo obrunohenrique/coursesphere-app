@@ -7,7 +7,7 @@ from ..database import get_session
 from ..models import User
 from ..schemas import UserCreate, UserRead, Token
 from ..security import create_access_token, SECRET_KEY, ALGORITHM
-from ..user_crud import authenticate_user, create_user
+from ..user_crud import authenticate_user, create_user, delete_user, update_user
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -58,3 +58,19 @@ def login_for_access_token(
         )
     access_token = create_access_token(data={"sub": user.email})
     return {"access_token": access_token, "token_type": "bearer"}
+
+@router.put("/me", response_model=UserRead)
+def update_current_user(
+    user_in: UserCreate, 
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user)
+):
+    return update_user(session, current_user, user_in)
+
+@router.delete("/me", status_code=status.HTTP_204_NO_CONTENT)
+def delete_current_user(
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user)
+):
+    delete_user(session, current_user)
+    return None
