@@ -63,13 +63,16 @@ def test_delete_lesson_success(session, test_setup):
 
 # --- TESTES DE INTEGRIDADE (FAILURE CASES) ---
 
-def test_delete_non_existent_lesson(session):
-    # Tentar deletar algo que não existe não deve quebrar o CRUD, 
-    # mas o get_lesson retornará None
-    assert get_lesson(session, 9999) is None
+def test_get_non_existent_lesson(session):
+    # Pegamos o ID 1 em um banco que acabamos de garantir que está vazio
+    # ou um ID que é o "max(id) + 1"
+    invalid_id = 1 
+    assert get_lesson(session, invalid_id) is None
 
 def test_lesson_foreign_key_constraint(session):
-    # Garante que não criamos aula para curso fantasma
-    # (Exige PRAGMA foreign_keys=ON no database.py)
+    # IDs negativos não são gerados pelo autoincremento
+    invalid_course_id = -1 
+    lesson_in = LessonCreate(title="Aula Fantasma", course_id=invalid_course_id)
+    
     with pytest.raises(IntegrityError):
-        create_lesson(session, LessonCreate(title="Aula Fantasma", course_id=9999))
+        create_lesson(session, lesson_in)
