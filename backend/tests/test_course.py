@@ -1,9 +1,8 @@
 import pytest
 from datetime import date, timedelta
-from app.course_crud import create_course
-from app.schemas import CourseCreate
-from app.user_crud import create_user
-from app.course_crud import create_course, get_course, get_courses, update_course, delete_course
+from app.crud.course_crud import create_course
+from app.schemas.course import CourseCreate
+from app.crud.course_crud import create_course, get_course, get_courses, update_course, delete_course
 from fastapi import HTTPException
 
 # --- TESTES DE SUCESSO ---

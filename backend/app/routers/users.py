@@ -4,10 +4,10 @@ from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from sqlmodel import Session, select
 from jose import JWTError, jwt
 from ..database import get_session
-from ..models import User
-from ..schemas import UserCreate, UserRead, Token
-from ..security import create_access_token, SECRET_KEY, ALGORITHM
-from ..user_crud import authenticate_user, create_user, delete_user, update_user
+from ..models.models import User
+from ..schemas.user import UserCreate, UserRead, Token
+from ..core.security import create_access_token, SECRET_KEY, ALGORITHM
+from ..crud.user_crud import authenticate_user, create_user, delete_user, update_user
 
 router = APIRouter(prefix="/users", tags=["Users"])
 

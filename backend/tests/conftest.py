@@ -1,8 +1,7 @@
 import pytest
 from sqlmodel import Session, SQLModel, create_engine
-from app.models import User # Adicionaremos Course e Lesson depois
-from app.schemas import UserCreate
-from app.user_crud import create_user
+from app.schemas.user import UserCreate
+from app.crud.user_crud import create_user
 
 
 @pytest.fixture(name="session")

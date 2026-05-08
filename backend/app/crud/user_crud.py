@@ -1,7 +1,7 @@
 from sqlmodel import Session, select
-from .models import User
-from .schemas import UserCreate
-from .security import get_password_hash, verify_password
+from ..models.models import User
+from ..schemas.user import UserCreate
+from ..core.security import get_password_hash, verify_password
 from fastapi import HTTPException
 
 # Função para criar um usuário

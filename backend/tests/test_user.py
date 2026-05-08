@@ -1,9 +1,9 @@
 import pytest
 from sqlmodel import Session
 from fastapi import HTTPException
-from app.user_crud import create_user, get_user_by_email, authenticate_user, update_user, delete_user
-from app.schemas import UserCreate
-from app.security import verify_password
+from app.crud.user_crud import create_user, get_user_by_email, authenticate_user, update_user, delete_user
+from app.schemas.user import UserCreate
+from app.core.security import verify_password
 
 # --- TESTES DE CRIAÇÃO (CREATE) ---
 
@@ -67,4 +67,3 @@ def test_delete_user_success(session: Session):
     # Tenta buscar o usuário deletado
     db_user = get_user_by_email(session, "delete@teste.com")
     assert db_user is None
-    

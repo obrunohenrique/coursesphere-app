@@ -2,10 +2,10 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session
 from typing import List
 from ..database import get_session
-from ..schemas import CourseCreate, CourseRead
-from ..course_crud import create_course, get_courses, get_course, update_course, delete_course
+from ..schemas.course import CourseCreate, CourseRead
+from ..crud.course_crud import create_course, get_courses, get_course, update_course, delete_course
 from ..routers.users import get_current_user
-from ..models import User
+from ..models.models import User
 
 router = APIRouter(prefix="/courses", tags=["Courses"])
 

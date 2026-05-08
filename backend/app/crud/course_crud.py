@@ -1,7 +1,7 @@
 from sqlmodel import Session, select
 from fastapi import HTTPException, status
-from .models import Course
-from .schemas import CourseCreate
+from ..models.models import Course
+from ..schemas.course import CourseCreate
 
 def create_course(session: Session, course_in: CourseCreate, creator_id: int):
     # Requisito: end_date >= start_date 

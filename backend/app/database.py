@@ -1,5 +1,5 @@
 from sqlmodel import SQLModel, create_engine, Session
-from .models import * # Importa os modelos para o SQLModel "enxergá-los"
+from .models.models import * # Importa os modelos para o SQLModel "enxergá-los"
 
 # 1. Definimos o nome do arquivo de banco local
 sqlite_file_name = "database.db"

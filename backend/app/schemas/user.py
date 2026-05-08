@@ -1,6 +1,5 @@
 from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import Optional
-from datetime import date
 
 # Schema base com campos comuns
 class UserBase(BaseModel):
@@ -26,17 +25,3 @@ class TokenData(BaseModel):
     email: Optional[str] = None
 
 
-class CourseBase(BaseModel):
-    name: str
-    description: Optional[str] = None
-    start_date: date
-    end_date: date
-
-class CourseCreate(CourseBase):
-    pass # Dados para criação
-
-class CourseRead(CourseBase):
-    id: int
-    creator_id: int
-    model_config = ConfigDict(from_attributes=True)
-    
