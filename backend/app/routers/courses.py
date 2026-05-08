@@ -6,6 +6,7 @@ from ..schemas.course import CourseCreate, CourseRead
 from ..crud.course_crud import create_course, get_courses, get_course, update_course, delete_course
 from ..routers.users import get_current_user
 from ..models.models import User
+from ..services.external_api import get_random_instructor
 
 router = APIRouter(prefix="/courses", tags=["Courses"])
 
@@ -61,3 +62,14 @@ def route_delete_course(
     
     delete_course(session, db_course)
     return None
+
+
+
+# Rota para consumo de API externa
+@router.get("/suggest/instructor")
+async def suggest_instructor():
+    """
+    Retorna um instrutor aleatório da API externa RandomUser.
+    Requisito: Consumo de API Pública Externa.
+    """
+    return await get_random_instructor()
