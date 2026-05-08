@@ -36,7 +36,7 @@ class Lesson(SQLModel, table=True):
     video_url: Optional[str] = None
 
     # Chave estrangeira para o curso
-    course_id: int = Field(foreign_key="course.id")
+    course_id: int = Field(foreign_key="Course.id")
     
     # Relacionamento inverso
     course: Optional[Course] = Relationship(back_populates="lessons")
