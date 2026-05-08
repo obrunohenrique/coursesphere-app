@@ -13,3 +13,8 @@ backend/venv/
 frontend/node_modules/
 frontend/dist/
 frontend/build/
+
+# Docker
+.docker/
+.env.docker
+docker-compose.override.yml
