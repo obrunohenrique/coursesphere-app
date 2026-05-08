@@ -34,7 +34,7 @@ class Lesson(SQLModel, table=True):
     title: str = Field(min_length=3) # Requisito: Mínimo 3 caracteres[cite: 1]
     status: str = Field(default="draft") # Requisito: Valores "draft" ou "published"[cite: 1]
     video_url: Optional[str] = None
-    
+
     # Chave estrangeira para o curso
     course_id: int = Field(foreign_key="course.id")
     
