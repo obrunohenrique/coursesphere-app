@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard';
 import Layout from './components/Layout';
 import MyCourses from './pages/MyCourses';
 import CourseDetails from './pages/CourseDetails';
+import Signup from './pages/Signup';
 
 // Função simples para proteger rotas
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -40,6 +41,7 @@ function App() {
             </PrivateRoute>
           } 
         />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </Router>
   );

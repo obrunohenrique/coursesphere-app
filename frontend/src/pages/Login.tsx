@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LogIn, Mail, Lock, Loader2 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -63,6 +64,18 @@ const Login: React.FC = () => {
               {error}
             </div>
           )}
+
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600">
+              Ainda não tem uma conta?{' '}
+              <Link 
+                to="/signup" 
+                className="font-bold text-indigo-600 hover:text-indigo-500 transition-colors"
+              >
+                Cadastre-se agora
+              </Link>
+            </p>
+          </div>
 
           <button
             type="submit"
