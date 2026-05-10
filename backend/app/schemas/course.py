@@ -8,6 +8,7 @@ class CourseBase(BaseModel):
     description: Optional[str] = None
     start_date: date
     end_date: date
+    duration: int
 
 class CourseCreate(CourseBase):
     pass # Dados para criação

@@ -20,7 +20,8 @@ class Course(SQLModel, table=True):
     start_date: date
     end_date: date
     created_at: datetime = Field(default_factory=datetime.now) # Incremento sugerido
-    
+    duration: int = Field(default=40)
+
     # Chave estrangeira para o dono do curso[cite: 1]
     creator_id: int = Field(foreign_key="user.id")
     
