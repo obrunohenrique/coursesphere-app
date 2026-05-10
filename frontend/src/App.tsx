@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Layout from './components/Layout';
 import MyCourses from './pages/MyCourses';
+import CourseDetails from './pages/CourseDetails';
 
 // Função simples para proteger rotas
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
@@ -30,7 +31,15 @@ function App() {
               <MyCourses />
             </PrivateRoute>
           } 
-/>
+        />
+        <Route 
+          path="/course/:id" 
+          element={
+            <PrivateRoute>
+              <CourseDetails />
+            </PrivateRoute>
+          } 
+        />
       </Routes>
     </Router>
   );

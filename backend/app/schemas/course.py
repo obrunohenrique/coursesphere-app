@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Optional
 from pydantic import BaseModel, ConfigDict
-
+from app.schemas.lesson import LessonRead
 
 class CourseBase(BaseModel):
     name: str
@@ -18,3 +18,6 @@ class CourseRead(CourseBase):
     creator_id: int
     model_config = ConfigDict(from_attributes=True)
     
+
+class CourseReadWithLessons(CourseRead):
+    lessons: list[LessonRead] = []

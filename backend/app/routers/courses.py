@@ -2,11 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session
 from typing import List
 from ..database import get_session
-from ..schemas.course import CourseCreate, CourseRead
+from ..schemas.course import CourseCreate, CourseRead, CourseReadWithLessons
 from ..crud.course_crud import create_course, get_courses, get_course, update_course, delete_course
 from ..routers.users import get_current_user
-from ..models.models import User
+from ..models.models import User, Lesson, Course
 from ..services.external_api import get_random_instructor
+from ..schemas.lesson import LessonCreate, LessonRead
 
 router = APIRouter(prefix="/courses", tags=["Courses"])
 
@@ -22,12 +23,12 @@ def route_create_course(
 def route_list_courses(session: Session = Depends(get_session)):
     return get_courses(session)
 
-@router.get("/{course_id}", response_model=CourseRead)
-def route_get_course(course_id: int, session: Session = Depends(get_session)):
-    db_course = get_course(session, course_id)
-    if not db_course:
+@router.get("/{id}", response_model=CourseReadWithLessons)
+def get_course(id: int, db: Session = Depends(get_session)):
+    course = db.get(Course, id)
+    if not course:
         raise HTTPException(status_code=404, detail="Curso não encontrado")
-    return db_course
+    return course
 
 @router.put("/{course_id}", response_model=CourseRead)
 def route_update_course(
@@ -73,3 +74,22 @@ async def suggest_instructor():
     Requisito: Consumo de API Pública Externa.
     """
     return await get_random_instructor()
+
+
+@router.post("/{course_id}/lessons", response_model=LessonRead)
+def create_lesson(course_id: int, lesson_in: LessonCreate, db: Session = Depends(get_session)):
+    # 1. Transformamos o Schema (Pydantic) em um dicionário
+    lesson_data = lesson_in.model_dump() 
+    
+    # 2. Criamos a instância do Modelo (SQLAlchemy/SQLModel) usando esse dicionário
+    db_lesson = Lesson(**lesson_data)
+    
+    # 3. Forçamos o course_id da URL para garantir a integridade
+    db_lesson.course_id = course_id
+    
+    # 4. Agora sim, salvamos no banco
+    db.add(db_lesson)
+    db.commit()
+    db.refresh(db_lesson)
+    
+    return db_lesson

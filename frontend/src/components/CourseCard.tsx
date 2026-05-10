@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Clock, Star } from 'lucide-react';
 import api from '../services/api';
+import { Link } from 'react-router-dom'
 
 interface CourseCardProps {
   course: {
@@ -31,6 +32,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
   }, [course.id]);
 
   return (
+    <Link to={`/course/${course.id}`} className="block group">
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all group">
       <div className="h-24 bg-indigo-600 p-6 flex justify-between items-start">
          <span className="px-3 py-1 bg-white/20 text-white text-[10px] uppercase font-bold rounded-full backdrop-blur-md">
@@ -68,6 +70,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
         </div>
       </div>
     </div>
+    </Link>
   );
 };
 
