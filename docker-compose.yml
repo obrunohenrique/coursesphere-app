@@ -1,25 +1,27 @@
 services:
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: coursesphere-api
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./backend:/app
-    environment:
-      - DATABASE_URL=sqlite:///./database.db
-    restart: always
   frontend:
-    build: ./frontend # Caminho para a pasta do front
+    build:
+      context: ./frontend
+      args:
+        - VITE_API_URL=http://localhost:8000 # Aqui você mudará no deploy
     ports:
-      - "5173:80" # Mapeia a porta 80 do Nginx para a 5173 do seu navegador
-    environment:
-      - VITE_API_URL=http://localhost:8000
+      - "5173:80"
     networks:
       - coursesphere-network
 
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALGORITHM=${ALGORITHM}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
+    volumes:
+      - ./backend:/app
+    networks:
+      - coursesphere-network
 
 networks:
   coursesphere-network:

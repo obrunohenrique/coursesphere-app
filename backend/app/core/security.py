@@ -5,7 +5,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 load_dotenv(dotenv_path=BASE_DIR / ".env")
 
 # Configurações de Token 

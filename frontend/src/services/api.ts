@@ -4,7 +4,7 @@ import axios from 'axios';
 const api = axios.create({
     // Se estiver rodando local fora do docker, use localhost. 
     // No futuro, ajustaremos para o nome do serviço no docker.
-    baseURL: 'http://localhost:8000',
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000',
 });
 
 api.interceptors.request.use((config) => {
@@ -23,13 +23,11 @@ api.interceptors.response.use(
   (error) => {
     // Se o erro for 401 (Não autorizado), o token provavelmente expirou
     if (error.response && error.response.status === 401) {
-      alert("Sua sessão expirou. Por favor, faça login novamente.");
-      
-      // Limpa o token para não tentar usar um token inválido de novo
-      localStorage.removeItem('@CourseSphere:token');
-      
-      // Redireciona para a raiz (Login)
-      window.location.href = '/';
+        if(!error.config.url.includes('/')) {
+            alert("Sua sessão expirou. Por favor, faça login novamente.");
+            localStorage.removeItem('@CourseSphere:token');          
+            window.location.href = '/';
+        }    
     }
     return Promise.reject(error);
   }

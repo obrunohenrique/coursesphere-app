@@ -27,7 +27,7 @@ class Course(SQLModel, table=True):
     
     # Relacionamentos
     creator: Optional[User] = Relationship(back_populates="courses")
-    lessons: List["Lesson"] = Relationship(back_populates="course")
+    lessons: List["Lesson"] = Relationship(back_populates="course", sa_relationship_kwargs={"cascade": "all, delete-orphan"})
 
 # 3. Aula (Lesson)
 class Lesson(SQLModel, table=True):
