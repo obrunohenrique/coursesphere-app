@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, BookOpen, User, LogOut, GraduationCap, Menu, X } from 'lucide-react';
+import { LayoutDashboard, BookOpen, LogOut, GraduationCap, Menu, X } from 'lucide-react';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,7 +15,6 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navItems = [
     { label: 'Dashboard', icon: LayoutDashboard, to: '/dashboard' },
     { label: 'Meus Cursos', icon: BookOpen, to: '/courses' }, // Ajuste para a rota real depois
-    { label: 'Perfil', icon: User, to: '/profile' },
   ];
 
   const isActive = (path: string) => location.pathname === path;

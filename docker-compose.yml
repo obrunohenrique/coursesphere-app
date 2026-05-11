@@ -11,4 +11,16 @@ services:
     environment:
       - DATABASE_URL=sqlite:///./database.db
     restart: always
+  frontend:
+    build: ./frontend # Caminho para a pasta do front
+    ports:
+      - "5173:80" # Mapeia a porta 80 do Nginx para a 5173 do seu navegador
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    networks:
+      - coursesphere-network
 
+
+networks:
+  coursesphere-network:
+    driver: bridge

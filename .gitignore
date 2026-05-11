@@ -16,6 +16,23 @@ frontend/build/
 frontend/.env
 frontend/.eslintcache
 
+# Logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Editor/OS
+frontend/.vscode/
+frontend/.idea/
+frontend/.DS_Store
+frontend/thumbs.db
+
+# Testes
+frontend/coverage/
+
+# Docker (Caso crie arquivos locais de log do container)
+frontend/.docker-compose.log
+
 # Docker
 .docker/
 .env.docker
