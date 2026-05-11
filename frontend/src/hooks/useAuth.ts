@@ -20,6 +20,11 @@ export const useAuth = () => {
 
     if (access_token) {
       localStorage.setItem('@CourseSphere:token', access_token);
+
+      if (response.data.user && response.data.user.id) {
+    localStorage.setItem('@CourseSphere:user_id', String(response.data.user.id));
+  }
+      
       api.defaults.headers.Authorization = `Bearer ${access_token}`;
       return true;
     }

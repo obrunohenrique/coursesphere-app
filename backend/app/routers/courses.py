@@ -3,7 +3,7 @@ from sqlmodel import Session
 from typing import List
 from ..database import get_session
 from ..schemas.course import CourseCreate, CourseRead, CourseReadWithLessons
-from ..crud.course_crud import create_course, get_courses, get_course, update_course, delete_course
+from ..crud.course_crud import create_course, get_courses, get_course
 from ..routers.users import get_current_user
 from ..models.models import User, Lesson, Course
 from ..services.external_api import get_random_instructor
@@ -30,6 +30,13 @@ def get_course(id: int, db: Session = Depends(get_session)):
         raise HTTPException(status_code=404, detail="Curso não encontrado")
     return course
 
+
+# Funcao auxiliar
+def get_course(session: Session, course_id: int):
+    # Aqui 'session' deve ser o primeiro para o .get() funcionar
+    return session.get(Course, course_id)
+
+
 @router.put("/{course_id}", response_model=CourseRead)
 def route_update_course(
     course_id: int, 
@@ -37,15 +44,23 @@ def route_update_course(
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user)
 ):
-    db_course = get_course(session, course_id)
+    db_course = get_course(session, course_id) 
+    
     if not db_course:
         raise HTTPException(status_code=404, detail="Curso não encontrado")
     
-    # REGRA DE NEGÓCIO: Só o criador edita
     if db_course.creator_id != current_user.id:
-        raise HTTPException(status_code=403, detail="Permissão insuficiente")
+        raise HTTPException(status_code=403, detail="Permissão negada")
+
+    # Lógica de atualização...
+    update_data = course_in.model_dump(exclude_unset=True)
+    for key, value in update_data.items():
+        setattr(db_course, key, value)
     
-    return update_course(session, db_course, course_in)
+    session.add(db_course)
+    session.commit()
+    session.refresh(db_course)
+    return db_course
 
 @router.delete("/{course_id}", status_code=status.HTTP_204_NO_CONTENT)
 def route_delete_course(
@@ -54,15 +69,16 @@ def route_delete_course(
     current_user: User = Depends(get_current_user)
 ):
     db_course = get_course(session, course_id)
+    
     if not db_course:
         raise HTTPException(status_code=404, detail="Curso não encontrado")
-    
-    # REGRA DE NEGÓCIO: Só o criador deleta
+
     if db_course.creator_id != current_user.id:
-        raise HTTPException(status_code=403, detail="Permissão insuficiente")
-    
-    delete_course(session, db_course)
-    return None
+        raise HTTPException(status_code=403, detail="Permissão negada")
+
+    session.delete(db_course)
+    session.commit()
+    return {"detail": "Curso deletado"}
 
 
 

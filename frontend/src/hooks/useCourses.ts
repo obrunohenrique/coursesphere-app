@@ -5,7 +5,8 @@ export interface Course {
   id: number;
   name: string;
   description: string;
-  duration: number; 
+  duration: number;
+  creator_id: any;
 }
 
 export const useCourses = () => {
