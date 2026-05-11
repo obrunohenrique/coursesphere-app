@@ -19,6 +19,9 @@ const CourseDetails: React.FC = () => {
   const [showPublished, setShowPublished] = useState(true);
   const [showDrafts, setShowDrafts] = useState(true);
 
+  const loggedUserId = localStorage.getItem('@CourseSphere:user_id');
+  const isCreator = course && String(course.creator_id) === String(loggedUserId);
+
   // Funções de busca
   const fetchDetails = async () => {
     try {
@@ -47,12 +50,6 @@ const CourseDetails: React.FC = () => {
   const publishedLessons = Array.isArray(lessons) ? lessons.filter(l => l.status === 'published') : [];
   const draftLessons = Array.isArray(lessons) ? lessons.filter(l => l.status === 'draft') : [];
 
-  // Funções de Modal
-  const handleOpenNewLesson = () => {
-    setSelectedLesson(null);
-    setIsLessonModalOpen(true);
-  };
-
   const handleEditLesson = (lesson: any) => {
     setSelectedLesson(lesson);
     setIsLessonModalOpen(true);
@@ -65,20 +62,20 @@ const CourseDetails: React.FC = () => {
     <div className="max-w-5xl mx-auto space-y-8 pb-20">
       {/* Barra Superior */}
       <div className="flex justify-between items-center">
+      <button onClick={() => navigate('/dashboard')} className="...">
+        <ArrowLeft size={20} /> Voltar ao Dashboard
+      </button>
+      
+      {/* A MÁGICA ACONTECE AQUI: O botão só renderiza se for o criador */}
+      {isCreator && (
         <button 
-          onClick={() => navigate('/dashboard')} 
-          className="flex items-center gap-2 text-gray-500 hover:text-indigo-600 transition-colors font-medium"
-        >
-          <ArrowLeft size={20} /> Voltar ao Dashboard
-        </button>
-        
-        <button 
-          onClick={handleOpenNewLesson}
+          onClick={() => { setSelectedLesson(null); setIsLessonModalOpen(true); }}
           className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-indigo-200"
         >
           <Plus size={20} /> Nova Aula
         </button>
-      </div>
+      )}
+    </div>
 
       {/* Hero do Curso */}
       <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
