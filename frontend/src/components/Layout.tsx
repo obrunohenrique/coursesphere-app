@@ -15,8 +15,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const storedUser = localStorage.getItem('@CourseSphere:user');
   
   if (storedUser) {
-    const user = JSON.parse(storedUser);
-    setUserName(user.full_name || user.name);
+    setUserName(storedUser);
   }
 }, []);
 
