@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, BookOpen, LogOut, GraduationCap, Menu, X } from 'lucide-react';
 
@@ -6,6 +6,19 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [userName, setUserName] = useState('Usuário');
+
+  const userInitial = userName.charAt(0).toUpperCase();
+
+  useEffect(() => {
+  // Recupera os dados do usuário salvos no login
+  const storedUser = localStorage.getItem('@CourseSphere:user');
+  
+  if (storedUser) {
+    const user = JSON.parse(storedUser);
+    setUserName(user.full_name || user.name);
+  }
+}, []);
 
   const handleLogout = () => {
     localStorage.removeItem('@CourseSphere:token');
@@ -105,9 +118,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             {navItems.find(i => isActive(i.to))?.label || 'Painel'}
           </h2>
           <div className="flex items-center gap-4">
-            <span className="text-sm font-medium text-gray-700">Bruno Henrique</span>
+            <span className="text-sm font-medium text-gray-700">{userName}</span>
             <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold shadow-md">
-              B
+              {userInitial}
             </div>
           </div>
         </header>

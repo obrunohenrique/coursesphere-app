@@ -24,6 +24,9 @@ export const useAuth = () => {
       if (response.data.user && response.data.user.id) {
     localStorage.setItem('@CourseSphere:user_id', String(response.data.user.id));
   }
+  if (response.data.name && response.data.user.name) {
+    localStorage.setItem('@CourseSphere:user', String(response.data.user.name));
+  }
       
       api.defaults.headers.Authorization = `Bearer ${access_token}`;
       return true;
