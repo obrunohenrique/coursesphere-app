@@ -1,52 +1,77 @@
-# CourseSphere 🌐
+# CourseSphere - Sistema de Gestão de Cursos
 
-**CourseSphere** é uma plataforma simplificada para gestão de cursos e aulas, desenvolvida como parte de um desafio técnico para demonstrar competências em desenvolvimento Full Stack, conteinerização e integração de APIs.
+Breve descrição: Uma aplicação Full Stack moderna desenvolvida para gestão de conteúdos educacionais, permitindo o cadastro de cursos e aulas com persistência de dados e autenticação segura.
 
----
+## 🌐 Deploy Real (Cloud)
+A aplicação está disponível online nos seguintes links:
+
+- Frontend: https://coursesphere-web.onrender.com
+
+- Backend (API): https://coursesphere-api-pik9.onrender.com
+
+## 🔑 Acesso de Teste
+O sistema possui fluxo de registro completo, mas para facilitar a avaliação, utilize as credenciais abaixo:
+
+Usuário: jose@email.com (ou qualquer usuário criado no pela tela de cadastro)
+
+Senha: 123456
 
 ## 🚀 Tecnologias Utilizadas
+- Backend: Python (FastAPI), SQLModel (SQLite).
 
-### Backend
-- **Python 3.14**
-- **FastAPI**: Framework web de alta performance.
-- **SQLModel (SQLAlchemy + Pydantic)**: Para interação com o banco de dados e validação de dados.
-- **SQLite**: Banco de dados relacional (em arquivo).
-- **Pytest**: Suíte de testes unitários e de integração.
-- **Httpx**: Para consumo assíncrono da API externa.
-- **Docker & Docker Compose**: Para orquestração e padronização do ambiente.
+- Frontend: React (Vite, TypeScript), Tailwind CSS.
 
----
+- Infraestrutura: Docker e Docker Compose.
 
-## 🛠️ Como Executar o Projeto
+## 🐳 Como rodar com Docker (Recomendado)
 
-### Pré-requisitos
-- Docker e Docker Compose instalados.
+Se você tem o Docker instalado, este é o método mais rápido para subir todo o ecossistema:
 
-### Via Docker (Recomendado)
-Para subir todo o ambiente (atualmente o Backend) com um único comando:
+Na raiz do projeto, execute o comando:
 
 ```bash
 docker-compose up --build
 ```
 
-Após o carregamento, a API estará disponível em:
+Após o build, acesse:
 
-- API: http://localhost:8000
+Frontend: http://localhost:5173
 
-- Documentação Interativa (Swagger): http://localhost:8000/docs
+Backend (Documentação API): http://localhost:8000/docs
 
+## 🛠️ Instalação Manual (Sem Docker)
 
-## 🧪 Testes
+- Backend
 
-O projeto conta com cobertura de testes unitários e de integração (CRUD e Segurança). Para rodar os testes:
+Entre na pasta backend: cd backend
 
-```bash
-cd backend
-pytest
-```
+Crie um ambiente virtual: python -m venv venv
 
-## 🔗 Integração com API Externa
+Ative o venv:
 
-O sistema consome a API pública RandomUser para sugerir instrutores convidados.
+Mac/Linux: source venv/bin/activate
 
-- Endpoint: GET /courses/suggest/instructor
+Windows: .\venv\Scripts\activate
+
+Instale as dependências: pip install -r requirements.txt
+
+Configure o arquivo .env com as chaves necessárias.
+
+Inicie o servidor: uvicorn app.main:app --reload
+
+- Frontend
+
+Entre na pasta frontend: cd frontend
+
+Instale as dependências: npm install
+
+Configure a variável VITE_API_URL no .env.
+
+Inicie a aplicação: npm run dev
+
+## 📝 Instruções de Uso
+Registro: Crie uma nova conta ou utilize o usuário de teste.
+
+Dashboard: Visualize os cursos disponíveis.
+
+Gerenciamento: Você pode criar, editar e excluir seus próprios cursos. Ao excluir um curso, todas as aulas vinculadas a ele serão removidas automaticamente.
