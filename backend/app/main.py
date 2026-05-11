@@ -17,7 +17,7 @@ app = FastAPI(title="CourseSphere API", lifespan=lifespan)
 
 origins = [
     "http://localhost:5173",  # URL padrão do Vite
-    "http://127.0.0.1:5173",
+    "https://coursesphere-web.onrender.com",
 ]
 
 app.add_middleware(
