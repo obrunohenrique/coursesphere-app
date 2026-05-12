@@ -10,11 +10,8 @@ A aplicação está disponível online nos seguintes links:
 - Backend (API): https://coursesphere-api-pik9.onrender.com
 
 ## 🔑 Acesso de Teste
-O sistema possui fluxo de registro completo, mas para facilitar a avaliação, utilize as credenciais abaixo:
+Acesse o Link, Crie um usuário e faça Login.
 
-Usuário: jose@email.com (ou qualquer usuário criado no pela tela de cadastro)
-
-Senha: 123456
 
 ## 🚀 Tecnologias Utilizadas
 - Backend: Python (FastAPI), SQLModel (SQLite).
